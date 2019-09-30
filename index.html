@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COCOMO</title>
+    <link rel="shortcut icon" href="images/favicon.png" type="png">
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="images/logo.png" alt="Логотип">
+            <h1>COCOMO</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="calculator__input">
+                <p>Тип проекта</p>
+                <select id="type">
+                    <option value="organic" selected>Органічний</option>
+                    <option value="semiDetached">Напіврозділений</option>
+                </select>
+                <label for="type"></label>
+                <br>
+                <label for="sizeCode">
+                    <p>Кількість рядків коду</p>
+                    <input type="number" id="sizeCode">
+                </label>
+                <br>
+                <div class="input"></div>
+                <button id="btn" class="buttons">Розрахувати</button>
+                <br>
+                <button id="btn__clear" class="buttons">Очистити вивід</button>
+            </div>
+            <div class="calculator__output"></div>
+        </div>
+    </main>
+
+    <script src="script/script.js"></script>
+</body>
+</html>
