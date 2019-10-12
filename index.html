@@ -20,18 +20,28 @@
     <main>
         <div class="container">
             <div class="calculator__input">
-                <p>Тип проекта</p>
-                <select id="type">
-                    <option value="organic" selected>Органічний</option>
-                    <option value="semiDetached">Напіврозділений</option>
-                </select>
-                <label for="type"></label>
-                <br>
-                <label for="sizeCode">
-                    <p>Кількість рядків коду</p>
-                    <input type="number" id="sizeCode">
-                </label>
-                <br>
+                <div class="chooseLevel">
+                    <p>Вибір рівня</p>
+                    <select id="levelSelection">
+                        <option value="basic" selected>Базовий</option>
+                        <option value="intermediate">Проміжний</option>
+                    </select>
+                    <label for="levelSelection"></label>
+                </div>
+                <div class="chooseType">
+                    <p>Вибір типу</p>
+                    <div class="checkboxes">
+                        <input type="radio" name="checkType" data="organic" checked><b class="checkboxesText">Органічний</b>
+                        <input type="radio" name="checkType" data="semidetach"><b class="checkboxesText">Напіврозподілений</b>
+                        <input type="radio" name="checkType" data="embedded"><b class="checkboxesText">Вбудований</b>
+                    </div>
+                </div>
+                <div class="chooseSize">
+                    <label for="sizeCode">
+                        <p>Кількість рядків коду</p>
+                        <input type="number" id="sizeCode">
+                    </label>
+                </div>
                 <div class="input"></div>
                 <button id="btn" class="buttons">Розрахувати</button>
                 <br>

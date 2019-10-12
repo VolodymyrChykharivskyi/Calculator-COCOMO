@@ -16,12 +16,18 @@ const dataOfSelect = [
     ["Вимоги дотримання графіка розробки", 1.23, 1.08, 1, 1.04, 1.10, "n/a"],
 ];
 
-document.querySelector("#type").onchange = function () {
-    let select = document.querySelector("#type");
+const type = {
+    "organic" : [[2.4, 1.05, 2.5, 0.38],[3.2, 1.05]],
+    "semidetach" : [[3, 1.12, 2.5, 0.35],[3, 1.12]],
+    "embedded" : [[3.6, 1.2, 2.5, 0.32],[2.8, 1.2]],
+};
+
+document.querySelector("#levelSelection").onchange = function () {
+    let select = document.querySelector("#levelSelection");
     let valueSelect = select.options[select.selectedIndex].value;
     let input = document.querySelector(".input");
 
-    if (valueSelect == "organic") {
+    if (valueSelect == "basic") {
         if (input.children.length > 0) {
             input.innerHTML = "";
         }
@@ -32,28 +38,36 @@ document.querySelector("#type").onchange = function () {
 };
 
 document.querySelector("#btn").onclick = function () {
-    let select = document.querySelector("#type");
+    let select = document.querySelector("#levelSelection");
     let valueSelect = select.options[select.selectedIndex].value;
     let sizeCode = getSizeOfCode(document.querySelector("#sizeCode").value);
+    let dataType;
+    let chooseType = chooseValueType();
 
-    if (valueSelect == "organic") {
-        organicMode(sizeCode);
-    }
-    else {
-        semiDetachedMode(sizeCode);
-    }
+    valueSelect === "basic" ?  dataType = type[chooseType][0] : dataType = type[chooseType][1];
+    valueSelect === "basic" ? basicMode(sizeCode,dataType) : intermediateMode(sizeCode,dataType);
 };
 
-function getSizeOfCode(sizeCode) {
-    if (sizeCode < 1000) {
-        return sizeCode / 1000;
+function chooseValueType() {
+    let inputs = document.querySelectorAll(".chooseType input");
+    let chooseType;
+
+    for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].checked) {
+            chooseType = inputs[i].getAttribute("data");
+        }
     }
-    return sizeCode * 0.001;
+    return chooseType;
 }
 
-function organicMode(sizeCode) {
-    let peopleMonth = 2.4 * (sizeCode ** 1.05);
-    let timeAtMonth = 2.5 * (peopleMonth ** 0.38);
+function getSizeOfCode(sizeCode) {
+    return (sizeCode < 1000) ? (sizeCode / 1000) : (sizeCode * 0.001);
+}
+
+function basicMode(sizeCode,dataType) {
+    let [a,b,c,d] = dataType;
+    let peopleMonth = a * (sizeCode ** b);
+    let timeAtMonth = c * (peopleMonth ** d);
     let averageNumberOfStaff = peopleMonth / timeAtMonth;
     let productivity = sizeCode / peopleMonth;
     let outputData = {
@@ -65,7 +79,8 @@ function organicMode(sizeCode) {
     outputResult(outputData);
 }
 
-function semiDetachedMode(sizeCode) {
+function intermediateMode(sizeCode, dataType) {
+    let [a,b] = dataType;
     let arraySelectors = [];
     let selectors = [];
     let valueSelectors = 1;
@@ -81,7 +96,7 @@ function semiDetachedMode(sizeCode) {
         }
     }
 
-    let peopleMonth = valueSelectors * 3.2 * (sizeCode ** 1.05);
+    let peopleMonth = valueSelectors * a * (sizeCode ** b);
     let outputData = {
         "Трудоємкість" : peopleMonth,
     };
